@@ -25,7 +25,7 @@ public class JavaFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ListEtab.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -41,7 +41,7 @@ public class JavaFX extends Application {
        
         EtablismentService es = new EtablismentService();
 //        System.out.println("testaff : "+ es.afficherEtablissement("Garderie"));
-        es.deleteEtablissement(7);
+        //es.deleteEtablissement(7);
         System.out.println("ey");
       /* SendMail test = new SendMail();
         SendMail.send(EmailEtab,mailUtilisateur);*/

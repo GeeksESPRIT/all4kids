@@ -13,9 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.MyBdConnection;
 import entities.Etablisment;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.ListEtabController;
 import static javafx.ListEtabController.idEtablissement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  *
@@ -26,6 +32,9 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
     private static EtablismentService instance;
     private Statement st;
     private ResultSet rs;
+     private MyBdConnection mycon;
+      private ObservableList<Etablisment> data;
+
 
     public EtablismentService() {
         MyBdConnection cnx = MyBdConnection.getInstanceBD();
@@ -49,8 +58,8 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
 
         Etablisment obj = (Etablisment) object;
         String req = "INSERT INTO `etablisment` "
-                + "( `nom`, `adresse`, `fix`, `type`, `idUser`, `proprietaire`, `email`, `datecreation`, `capacite`, `description`, `rating`)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?)";
+                + "( `nom`, `adresse`, `fix`, `type`, `idUser`, `proprietaire`, `email`, `datecreation`, `capacite`, `description`, `rating`, `enabled` )"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement statement = cnx.getConnection().prepareStatement(req);
@@ -66,6 +75,7 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
             statement.setInt(9, obj.getCapacite());
             statement.setString(10, obj.getDescription());
             statement.setInt(11, obj.getRating());
+            statement.setInt(12, obj.getEnabled());
             statement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -171,11 +181,31 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
 
         }
         while (rs.next()) {
-            Etablisment p = new Etablisment(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12));
+            Etablisment p = new Etablisment(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13));
             list.add(p);
         }
         System.out.println("" + list.toString());
         return list;
 
     }
+    
+    
+   
+    
+ /*   public void LoadData() {
+        Connection con = mycon.getConnection();
+        data = FXCollections.observableArrayList();
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM `etablisment`");
+            while (rs.next()) {
+                
+                data.add(new Etablisment(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12)));
+            
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListEtabController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+       
+    }*/
 }

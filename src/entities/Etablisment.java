@@ -23,11 +23,12 @@ public class Etablisment {
     private String datecreation;
     private int capacite;
     private String description;
+    private int enabled;
 
     public Etablisment() {
     }
 
-    public Etablisment(int id, String nom, String adresse, String tel, String type, int idUser,  String proprietaire, String email, String datecreation, int capacite, String description,int Rating) {
+    public Etablisment(int id, String nom, String adresse, String tel, String type, int idUser,  String proprietaire, String email, String datecreation, int capacite, String description,int Rating,int enabled) {
         this.id = id;
         this.nom = nom;
         this.adresse = adresse;
@@ -40,6 +41,7 @@ public class Etablisment {
         this.capacite = capacite;
         this.description = description;
         this.Rating = Rating;
+        this.enabled= enabled;
     }
 
     public Etablisment(int id, String nom, String adresse, String tel, String type, String proprietaire, String email, String datecreation, int capacite, String description) {
@@ -67,6 +69,7 @@ public class Etablisment {
         this.datecreation = datecreation;
         this.capacite = capacite;
         this.description = description;
+               
     }
 
     public String getProprietaire() {
@@ -173,9 +176,19 @@ public class Etablisment {
         this.Rating = Rating;
     }
 
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
-        return "Etablisment{" + "id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", tel=" + tel + ", idUser=" + idUser + ", type=" + type + ", Rating=" + Rating + ", proprietaire=" + proprietaire + ", email=" + email + ", datecreation=" + datecreation + ", description=" + description + '}';
+        return "Etablisment{" + "id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", tel=" + tel + ", idUser=" + idUser + ", type=" + type + ", Rating=" + Rating + ", proprietaire=" + proprietaire + ", email=" + email + ", datecreation=" + datecreation + ", capacite=" + capacite + ", description=" + description + ", enabled=" + enabled + '}';
     }
+
+   
 
 }

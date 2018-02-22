@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package javafx;
 
 import com.jfoenix.controls.JFXButton;
@@ -26,9 +25,10 @@ import services.Alertt;
 import services.EtablismentService;
 
 /**
- 
+ *
  */
 public class FXMLController implements Initializable {
+
     @FXML
     private JFXTextField nom;
     @FXML
@@ -55,11 +55,9 @@ public class FXMLController implements Initializable {
     /**
      * Initializes the controller class.
      */
- 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        type.getItems().addAll("Garderie","Jardins enfants","Ecole privé");
+        type.getItems().addAll("Garderie", "Jardins enfants", "Ecole privé");
 
 // dateCreation.setOnAction(new EventHandler() {
 //     public void handle(Event t) {
@@ -67,30 +65,34 @@ public class FXMLController implements Initializable {
 //         System.out.println("Selected date: " + date);
 //     }
 // });
-    }    
-  public static boolean isValidMail(String email)
-    {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                            "[a-zA-Z0-9_+&*-]+)*@" +
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                            "A-Z]{2,7}$";
-                             
+    }
+
+    public static boolean isValidMail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
+                + "[a-zA-Z0-9_+&*-]+)*@"
+                + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+                + "A-Z]{2,7}$";
+
         Pattern pat = Pattern.compile(emailRegex);
-        if (email == null)
+        if (email == null) {
             return false;
+        }
         return pat.matcher(email).matches();
-    } 
+    }
+
     @FXML
     private void ajouter(ActionEvent event) {
-          String DATE_PATTERN = "dd+MM-yyyy";
+        String DATE_PATTERN = "dd/MM/yyyy";
 
-    /** The date formatter. */
-   DateTimeFormatter DATE_FORMATTER = 
-            DateTimeFormatter.ofPattern(DATE_PATTERN);
-   String date = DATE_FORMATTER.format(dateCreation.getValue());
+        /**
+         * The date formatter.
+         */
+        DateTimeFormatter DATE_FORMATTER
+                = DateTimeFormatter.ofPattern(DATE_PATTERN);
+        String date = DATE_FORMATTER.format(dateCreation.getValue());
 
-        EtablismentService s=new EtablismentService();
-        Etablisment e =new Etablisment();
+        EtablismentService s = new EtablismentService();
+        Etablisment e = new Etablisment();
         e.setDatecreation(date);
         e.setNom(nom.getText());
         e.setAdresse(adresse.getText());
@@ -98,22 +100,20 @@ public class FXMLController implements Initializable {
         e.setType(type.getValue().toString());
         e.setIdUser(8 /*CrudLogin.id_user*/);
         e.setProprietaire(propretaire.getText());
-        
+
         e.setDescription(description.getText());
-        e.setCapacite((int)capacite.getValue());
-        
+        e.setCapacite((int) capacite.getValue());
+
         e.setEmail(email.getText());
-  
-        
+
+        e.setEnabled(0);
+
         s.ajouterEtablissement(e);
-        Alertt.infoBox("Etablissement ajouté", "Ajout", "succes");
-        
-        
+        Alertt.infoBox("Votre demande va etre traitée", "Ajout", "succes");
+
     }
 
-    @FXML
-    private void ajouter(MouseEvent event) {
-    }
+  
 
 //    public JFXTextField getNom() {
 //        return nom;
@@ -194,6 +194,4 @@ public class FXMLController implements Initializable {
 //    public void setAjouter(JFXButton ajouter) {
 //        this.ajouter = ajouter;
 //    }
-   
-    
 }
