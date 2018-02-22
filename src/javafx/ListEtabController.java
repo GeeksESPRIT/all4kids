@@ -75,8 +75,7 @@ public class ListEtabController implements Initializable {
     private JFXButton btnSupprimer;
     @FXML
     private JFXButton details;
-    @FXML
-    private CustomTextField rechercher;
+   
     @FXML
     private Label nomLabel;
     @FXML
@@ -91,6 +90,12 @@ public class ListEtabController implements Initializable {
     public static int idEtablissement;
     @FXML
     private AnchorPane rootpane;
+    
+    @FXML
+    private JFXButton ajouter;
+    @FXML
+    private CustomTextField rechercher;
+   
 
     /**
      * Initializes the controller class.
@@ -108,10 +113,10 @@ public class ListEtabController implements Initializable {
                 (observable, oldValue, newValue) -> showDetails(newValue));
 
         choixEtab.getItems().addAll("Garderie", "Jardins enfants", "Ecole privé");
+        
 
     }
 
-    @FXML
     private void ajout(ActionEvent event) throws SQLException, IOException {
         AnchorPane Anchpane = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         rootpane.getChildren().setAll(Anchpane);
@@ -182,6 +187,7 @@ public class ListEtabController implements Initializable {
         }
     }
 
+    @FXML
     public void recherche() {
 
 //        FilteredList<Etablisment> filteredData = new FilteredList<>(data, e -> true);
@@ -288,7 +294,6 @@ public class ListEtabController implements Initializable {
     }
 
     @FXML
-
     void delete_act(ActionEvent event) {
 
         try {
