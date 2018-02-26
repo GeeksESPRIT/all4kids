@@ -289,31 +289,6 @@ return false;
          if(updateEtab())
          { LoadData();
              progressbar.setVisible(true);
-                          progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-             progressbar.setVisible(true);
-
-                                       progressbar.setVisible(true);
-             progressbar.setVisible(true);
-
              if(progressbar.isVisible())
             SendMail.sending(mail.getText(),etab.getText(),"Demande d'inscription dans notre etablissement  <<"+etabnom.getText()+">>","votre demande a été traitée,veuilez nous rendre visite le plus tot possible à "+adressLabel.getText()+" \n"+" Ou bien nous contactez sur: "+telLabel.getText()+".");
          
