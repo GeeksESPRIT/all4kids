@@ -23,16 +23,18 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.PasswordAuthentication;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+import org.openqa.selenium.support.ui.Wait;
 
 public class SendMail {
 
     private static String user = "mokhtarammar.ma@gmail.com";
     private static String pass = "princemma";
 
-    public static void send(String EmailEtab,String mailUtilisateur) {
+    public static void sending(String EmailEtab,String mailUtilisateur,String sujet , String contenu) {
         Properties props = new Properties();
 
         props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -48,20 +50,23 @@ public class SendMail {
             Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(user));
-            message.setReplyTo(new Address[] { new InternetAddress(EmailSendingController.mailUtilisateur) });;
+            message.setReplyTo(new Address[] { new InternetAddress(mailUtilisateur) });;
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(EmailEtab));
-            message.setSubject("exempleeeeeeeeee");
-            message.setText("test test ");
-
+            message.setSubject(sujet);
+            message.setContent(contenu,"text/html; charset=utf-8");
+            
             Transport.send(message);
 
-            JOptionPane.showMessageDialog(null, "Email send!");
+            JOptionPane.showMessageDialog(null, "Email envoyer !");
+            
 
         } catch (MessagingException e) {
             JOptionPane.showMessageDialog(null, "Something happened!");
+            System.out.println(EmailEtab);
 
             throw new RuntimeException(e);
         }
 
     }
+  
 }

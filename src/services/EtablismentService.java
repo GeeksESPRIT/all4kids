@@ -22,7 +22,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import org.apache.xalan.xsltc.compiler.util.Util;
+import javafx.FXMLController;
 /**
  *
  * @author Mokh
@@ -58,8 +59,8 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
 
         Etablisment obj = (Etablisment) object;
         String req = "INSERT INTO `etablisment` "
-                + "( `nom`, `adresse`, `fix`, `type`, `idUser`, `proprietaire`, `email`, `datecreation`, `capacite`, `description`, `rating`, `enabled` )"
-                + " values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "( `nom`, `adresse`, `fix`, `type`, `idUser`, `proprietaire`, `email`, `datecreation`, `capacite`, `description`, `rating`, `enabled`, `image` ,`nbrdispo`,`nbrparticipants`,`notified` )"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";;
 
         try {
             PreparedStatement statement = cnx.getConnection().prepareStatement(req);
@@ -76,6 +77,10 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
             statement.setString(10, obj.getDescription());
             statement.setInt(11, obj.getRating());
             statement.setInt(12, obj.getEnabled());
+            statement.setString(13,obj.getImage());
+            statement.setInt(14, obj.getCapacite());
+            statement.setInt(15, 0);
+            statement.setInt(16, 0);
             statement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -88,10 +93,10 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
 
         MyBdConnection cnx = MyBdConnection.getInstanceBD();
 
-        String req = "delete from etablisment where id=" + id;
+        String req = "DELETE FROM `etablisment` WHERE `id`="+id;
         try {
             PreparedStatement statement = cnx.getConnection().prepareStatement(req);
-            statement.executeUpdate();
+            statement.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
 
@@ -181,7 +186,7 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
 
         }
         while (rs.next()) {
-            Etablisment p = new Etablisment(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13));
+            Etablisment p = new Etablisment(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13), rs.getString(14));
             list.add(p);
         }
         System.out.println("" + list.toString());
@@ -190,7 +195,7 @@ public class EtablismentService implements IEtablismentService<Etablisment> {
     }
     
     
-   
+   //To change body of generated methods, choose Tools | Templates.
     
  /*   public void LoadData() {
         Connection con = mycon.getConnection();

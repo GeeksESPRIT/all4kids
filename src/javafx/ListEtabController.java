@@ -2,18 +2,23 @@ package javafx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import entities.Etablisment;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.ProfilEtabController.EmailEtab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,14 +29,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import org.controlsfx.control.textfield.CustomTextField;
 import services.EtablismentService;
+import services.SendMail;
 import utils.MyBdConnection;
 
 /**
@@ -70,12 +78,10 @@ public class ListEtabController implements Initializable {
     @FXML
     private TableColumn<Etablisment, String> description;
     @FXML
-    private JFXButton btnLoad;
-    @FXML
     private JFXButton btnSupprimer;
     @FXML
     private JFXButton details;
-   
+
     @FXML
     private Label nomLabel;
     @FXML
@@ -90,12 +96,21 @@ public class ListEtabController implements Initializable {
     public static int idEtablissement;
     @FXML
     private AnchorPane rootpane;
-    
+
     @FXML
     private JFXButton ajouter;
     @FXML
-    private CustomTextField rechercher;
-   
+    private JFXTextField rechercher;
+    @FXML
+    private ImageView imageetab;
+    @FXML
+    private JFXButton btnretour;
+    @FXML
+    private Label premier;
+    @FXML
+    private Label deuxieme;
+    @FXML
+    private Label troisieme;
 
     /**
      * Initializes the controller class.
@@ -107,13 +122,18 @@ public class ListEtabController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         mycon = new MyBdConnection();
         LoadData();
+
+        try {
+            LoadDataBest();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListEtabController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         recherche();
         Load();
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showDetails(newValue));
 
         choixEtab.getItems().addAll("Garderie", "Jardins enfants", "Ecole privé");
-        
 
     }
 
@@ -123,15 +143,60 @@ public class ListEtabController implements Initializable {
 
     }
 
-    @FXML
+    private void LoadDataBest() throws SQLException {
+        Calendar today = Calendar.getInstance();
+        Connection con = mycon.getConnection();
+        MyBdConnection cnx = MyBdConnection.getInstanceBD();
+
+        data = FXCollections.observableArrayList();
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM `etablisment` WHERE enabled=1 order by nbrparticipants DESC");
+            if (rs.next()) {
+                System.out.println("today.getDay()" + today.getTime().getDate());
+                if (today.getTime().getDate() == 1 && rs.getInt(17) == 0) {
+                    System.out.println("idbest" + rs.getInt(1));
+                    String req = " UPDATE `allforkids`.`etablisment` SET `notified` = '1'";
+                    PreparedStatement statement = cnx.getConnection().prepareStatement(req);
+                    statement.executeUpdate();
+                    System.out.println("rs.getString(8)" + rs.getString(8));
+                    SendMail.sending(rs.getString(8), "AllForKids", "Félicitation", "Félicitation vous étes le meilleur établissement du cet mois");
+
+                } else if (today.getTime().getDate() >= 1) {
+                    String req = " UPDATE `allforkids`.`etablisment` SET `notified` = '0'";
+                    PreparedStatement statement = cnx.getConnection().prepareStatement(req);
+                    statement.executeUpdate();
+
+                    ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM `etablisment` WHERE enabled=1 order by nbrparticipants DESC");
+                    
+                    if (rs2.next()) {
+                        
+                            premier.setText(rs2.getString(2));
+                            rs2.next();
+                            deuxieme.setText(rs2.getString(2));
+                            rs2.next();
+                            troisieme.setText(rs2.getString(2));
+                            
+                        
+                    }
+                }
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListEtabController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+    }
+
     private void LoadData() {
+
         Connection con = mycon.getConnection();
         data = FXCollections.observableArrayList();
         try {
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM `etablisment` WHERE enabled=1");
             while (rs.next()) {
 
-                data.add(new Etablisment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13)));
+                data.add(new Etablisment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13), rs.getString(14)));
 
             }
         } catch (SQLException ex) {
@@ -187,7 +252,6 @@ public class ListEtabController implements Initializable {
         }
     }
 
-    @FXML
     public void recherche() {
 
 //        FilteredList<Etablisment> filteredData = new FilteredList<>(data, e -> true);
@@ -196,10 +260,10 @@ public class ListEtabController implements Initializable {
                 LoadData();
             } else {
                 data.clear();
-                String sql = "SELECT * FROM `etablisment` WHERE nom LIKE '%" + rechercher.getText() + "%' "
-                        + "UNION SELECT * FROM `etablisment` WHERE adresse LIKE '%" + rechercher.getText() + "%'"
-                        + "UNION SELECT * FROM `etablisment` WHERE fix LIKE '%" + rechercher.getText() + "%'"
-                        + "UNION SELECT * FROM `etablisment` WHERE type LIKE '%" + rechercher.getText() + "%'";
+                String sql = "SELECT * FROM `etablisment` WHERE enabled = 1 && nom LIKE '%" + rechercher.getText() + "%' "
+                        + "UNION SELECT * FROM `etablisment` WHERE enabled = 1 && adresse LIKE '%" + rechercher.getText() + "%'"
+                        + "UNION SELECT * FROM `etablisment` WHERE enabled = 1&& fix LIKE '%" + rechercher.getText() + "%'"
+                        + "UNION SELECT * FROM `etablisment` WHERE enabled = 1 && type LIKE '%" + rechercher.getText() + "%'";
                 try {
                     PreparedStatement statement = mycon.getConnection().prepareStatement(sql);
                     //statement.setString(2, rechercher.getText());
@@ -230,6 +294,11 @@ public class ListEtabController implements Initializable {
             System.out.println("" + etablisment.getNom());
             nomLabel.setText(etablisment.getNom());
             telLabel.setText(etablisment.getTel());
+            File file = new File(etablisment.getImage());
+
+            Image image = new Image(file.toURI().toString());
+
+            imageetab.setImage(image);
 
         }
     }
@@ -294,7 +363,7 @@ public class ListEtabController implements Initializable {
     }
 
     @FXML
-    void delete_act(ActionEvent event) {
+    void deleteact(ActionEvent event) {
 
         try {
             Etablisment etablisment = table.getSelectionModel().getSelectedItem();
@@ -304,7 +373,9 @@ public class ListEtabController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 EtablismentService.getInstance().deleteEtablissement(idEtablissement);
+
             }
+
             List<Etablisment> etablisments = EtablismentService.getInstance().afficherEtablissement();
 
             ObservableList<Etablisment> data = FXCollections.observableArrayList(etablisments);
@@ -313,6 +384,13 @@ public class ListEtabController implements Initializable {
             Logger.getLogger(ListEtabController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void retour(ActionEvent event) throws IOException {
+        AnchorPane Anchpane = FXMLLoader.load(getClass().getResource("PremierPage.fxml"));
+        rootpane.getChildren().setAll(Anchpane);
+    }
+
 }
 
 //public void deleteButtonPushed(ActionEvent event)

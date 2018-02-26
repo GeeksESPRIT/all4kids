@@ -60,8 +60,14 @@ public class Share {
               System.out.println(me.getName());
             
               FacebookType publishMessageResponse =
-            fbClient.publish("me/feed", FacebookType.class,com.restfb.Parameter.with("message", "tesst"+""));
+            fbClient.publish("me/feed", FacebookType.class,com.restfb.Parameter.with("i'm a big fan of", "tesst"+"fcbcvb"));
             System.out.println("Published message ID: " + publishMessageResponse.getId());
+
+    /**
+     *
+     */
+    
+        
     
             
     }

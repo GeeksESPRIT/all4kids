@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootpane" prefHeight="580.0" prefWidth="950.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.mesEtabConroller">
+    <stylesheets>
+        <URL value="@listetab.css" />
+    </stylesheets>
+   <children>
+      <SplitPane dividerPositions="0.6508438818565401" prefHeight="580.0" prefWidth="950.0">
+        <items>
+          <AnchorPane fx:id="overview" focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="692.0">
+               <children>
+                  <TableView fx:id="table" editable="true" layoutY="93.0" prefHeight="409.0" prefWidth="616.0">
+                     <columns>
+                        <TableColumn fx:id="cnom" prefWidth="121.0" text="Nom Etablissement" />
+                        <TableColumn fx:id="cadresse" prefWidth="130.0" text="Adresse Etablissement" />
+                        <TableColumn fx:id="ctel" prefWidth="108.0" text="Numero telephone" visible="false" />
+                        <TableColumn fx:id="ctype" prefWidth="125.0" text="Type" visible="false" />
+                        <TableColumn fx:id="idEtab" prefWidth="121.0" text="ID" visible="false" />
+                        <TableColumn fx:id="proprietaire" prefWidth="121.0" text="proprietaire" visible="false" />
+                        <TableColumn fx:id="email" prefWidth="121.0" text="email" visible="false" />
+                        <TableColumn fx:id="datecreation" prefWidth="121.0" text="datecreation" visible="false" />
+                        <TableColumn fx:id="capacite" prefWidth="121.0" text="capacite" />
+                        <TableColumn fx:id="description" prefWidth="121.0" text="description" visible="false" />
+                        <TableColumn fx:id="idUser" prefWidth="121.0" text="IdUser" visible="false" />
+                        <TableColumn fx:id="rating" prefWidth="121.0" text="rating" visible="false" />
+                          <TableColumn fx:id="nbrdispo" prefWidth="121.0" text="disponible" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <JFXComboBox fx:id="choixEtab" layoutX="475.0" layoutY="61.0" prefHeight="25.0" prefWidth="114.0" />
+                  <ImageView fitHeight="37.0" fitWidth="62.0" layoutX="71.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../Downloads/icons8-left-50.png" />
+                     </image>
+                  </ImageView>
+                  <Pagination id="pages" layoutX="181.0" layoutY="451.0" pageCount="20" prefHeight="98.0" prefWidth="200.0" />
+                  <JFXTextField editable="false" focusColor="WHITE" labelFloat="true" layoutX="216.0" layoutY="37.0" prefHeight="30.0" prefWidth="185.0" style="-jfx-label-float: #FFFFFF;" text="Liste des Etablissements" unFocusColor="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="rechercher" layoutX="22.0" layoutY="61.0" promptText="rechercher ..." />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" opacity="0.93" prefHeight="436.0" prefWidth="239.0">
+               <children>
+                  <Rectangle arcHeight="40.0" arcWidth="40.0" height="133.0" layoutX="12.0" layoutY="253.0" stroke="BLACK" strokeType="INSIDE" width="299.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#e8e0eb" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill></Rectangle>
+                  <JFXButton fx:id="ajouter" layoutX="14.0" layoutY="496.0" onAction="#Ajouterbtn" text="Ajouter  un etablissement" />
+                  <GridPane layoutX="14.0" layoutY="265.0" prefHeight="90.0" prefWidth="285.0">
+                     <children>
+                        <Label id="nomLabel" fx:id="nomLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="Label" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Felix Titling" size="12.0" />
+                           </font></Label>
+                        <Label id="nomLabel" fx:id="telLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Felix Titling" size="12.0" />
+                           </font></Label>
+                        <Label text="Nom Etablissement:">
+                           <font>
+                              <Font name="FTYSTRATEGYCIDENCV" size="15.0" />
+                           </font></Label>
+                        <Label text="Numéro du telphone:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="FTYSTRATEGYCIDENCV" size="15.0" />
+                           </font></Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <JFXButton fx:id="details" buttonType="RAISED" layoutX="110.0" layoutY="355.0" onAction="#afficherDetails" style="-fx-background-color: #339CFF;" text="afficher details" textAlignment="CENTER" underline="true" />
+                  <JFXButton fx:id="btnSupprimer" buttonType="RAISED" layoutX="14.0" layoutY="533.0" onAction="#deleteact" ripplerFill="#ff0c0c" text="Supprimer etablissement" />
+                  <JFXButton fx:id="modifierEtablissement" buttonType="RAISED" layoutX="176.0" layoutY="533.0" onAction="#affichermod" ripplerFill="#21ab34" text="Modifier l'etablissement" />
+                  <ImageView fx:id="imageetab" fitHeight="196.0" fitWidth="267.0" layoutX="28.0" layoutY="23.0" pickOnBounds="true" />
+                  <JFXButton fx:id="btngestiondemande" layoutX="176.0" layoutY="496.0" mnemonicParsing="false" onAction="#gestionDemande" text="gérer mes inscription" />
+                  <Separator layoutX="62.0" layoutY="473.0" prefWidth="200.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <JFXButton fx:id="btnretour" onAction="#premierPage" text="retour" />
+   </children>
+</AnchorPane>

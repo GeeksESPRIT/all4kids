@@ -11,8 +11,47 @@ package entities;
  * @author mrad
  */
 public class Utilisateur {
-private String Nom,Prenom,username,Email,Mdp;
-private int Age;
+    
+public String Nom,Prenom,username,Email,Mdp;
+public int id,Age,numero;
+
+  
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(int id,String Nom, String Prenom, String Email, int numero) {
+        this.id=id;
+        this.Nom = Nom;
+        this.Prenom = Prenom;
+        this.Email = Email;
+        this.numero = numero;
+    }
+    public Utilisateur(String Nom, String Prenom, String Email, int numero) {
+        this.Nom = Nom;
+        this.Prenom = Prenom;
+        this.Email = Email;
+        this.numero = numero;
+    }
+
+    public Utilisateur(String Nom, String Prenom, String Email, int id, int numero) {
+        this.Nom = Nom;
+        this.Prenom = Prenom;
+        this.Email = Email;
+        this.id = id;
+        this.numero = numero;
+    }
+
+    public Utilisateur(String Nom, String Prenom, String username, String Email, String Mdp, int id, int Age, int numero) {
+        this.Nom = Nom;
+        this.Prenom = Prenom;
+        this.username = username;
+        this.Email = Email;
+        this.Mdp = Mdp;
+        this.id = id;
+        this.Age = Age;
+        this.numero = numero;
+    }
 
   
 
@@ -70,11 +109,27 @@ private int Age;
     public void setAge(int Age) {
         this.Age = Age;
     }
+  public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
     @Override
     public String toString() {
-        return "Utilisateur{" + "Nom=" + Nom + ", Prenom=" + Prenom + ", Email=" + Email + ", Mdp=" + Mdp + ", Age=" + Age + '}';
+        return "Utilisateur{" + "Nom=" + Nom + ", Prenom=" + Prenom + ", username=" + username + ", Email=" + Email + ", Mdp=" + Mdp + ", Age=" + Age + ", numero=" + numero + '}';
     }
+
+    
     
 
 

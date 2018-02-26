@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import org.controlsfx.control.textfield.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootpane" prefHeight="580.0" prefWidth="950.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.ListEtabController">
+<AnchorPane id="AnchorPane" fx:id="rootpane" prefHeight="580.0" prefWidth="950.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.ListEtabController">
     <stylesheets>
         <URL value="@listetab.css" />
     </stylesheets>
@@ -22,7 +31,7 @@
         <items>
           <AnchorPane fx:id="overview" focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="692.0">
                <children>
-                  <TableView fx:id="table" editable="true" layoutY="93.0" prefHeight="409.0" prefWidth="616.0">
+                  <TableView fx:id="table" editable="true" layoutY="93.0" prefHeight="383.0" prefWidth="616.0">
                      <columns>
                         <TableColumn fx:id="cnom" prefWidth="121.0" text="Nom Etablissement" />
                         <TableColumn fx:id="cadresse" prefWidth="130.0" text="Adresse Etablissement" />
@@ -47,34 +56,42 @@
                         <Image url="@../../../../../../Downloads/icons8-left-50.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="btnLoad" layoutX="32.0" layoutY="539.0" onAction="#LoadData" text="Load" />
-                  <CustomTextField id="rechercher" fx:id="rechercher" layoutX="14.0" layoutY="61.0" promptText="rechercher..." stylesheets="@../../../../../../Downloads/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome.css" />
-                  <Pagination id="pages" layoutX="181.0" layoutY="451.0" pageCount="20" prefHeight="98.0" prefWidth="200.0" />
+                  <Pagination id="pages" layoutX="181.0" layoutY="426.0" pageCount="20" prefHeight="98.0" prefWidth="200.0" />
                   <JFXTextField editable="false" focusColor="WHITE" labelFloat="true" layoutX="216.0" layoutY="37.0" prefHeight="30.0" prefWidth="185.0" style="-jfx-label-float: #FFFFFF;" text="Liste des Etablissements" unFocusColor="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </JFXTextField>
+                  <JFXTextField fx:id="rechercher" layoutX="22.0" layoutY="61.0" promptText="rechercher ..." />
+                  <JFXButton fx:id="btnretour" layoutX="3.0" layoutY="9.0" onAction="#retour" text="retour" />
+                  <JFXButton fx:id="btnSupprimer" buttonType="RAISED" layoutX="421.0" layoutY="544.0" onAction="#deleteact" ripplerFill="#ff0c0c" text="Supprimer etablissement" />
+                  <JFXButton fx:id="modifierEtablissement" buttonType="RAISED" layoutX="203.0" layoutY="544.0" onAction="#affichermod" ripplerFill="#21ab34" text="Modifier l'etablissement" />
+                  <JFXButton fx:id="ajouter" layoutX="24.0" layoutY="544.0" text="Ajouter Etablissement" />
+                  <Separator layoutX="25.0" layoutY="531.0" prefHeight="3.0" prefWidth="554.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" opacity="0.93" prefHeight="436.0" prefWidth="239.0">
+            <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.93" prefHeight="436.0" prefWidth="239.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="63.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="podium" fitHeight="98.0" fitWidth="317.0" layoutX="10.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../projet%20tool/gif/boy-sign.gif" />
-                     </image></ImageView>
-                  <Rectangle arcHeight="40.0" arcWidth="40.0" height="133.0" layoutX="12.0" layoutY="253.0" stroke="BLACK" strokeType="INSIDE" width="299.0">
-                     <fill>
-                        <LinearGradient endX="1.0" endY="1.0">
-                           <stops>
-                              <Stop color="#e8e0eb" />
-                              <Stop color="WHITE" offset="1.0" />
-                           </stops>
-                        </LinearGradient>
-                     </fill></Rectangle>
-                  <JFXButton fx:id="ajouter" layoutX="14.0" layoutY="496.0" text="Ajouter " />
-                  <GridPane layoutX="14.0" layoutY="265.0" prefHeight="90.0" prefWidth="285.0">
+                        <Image url="@../img/Podium.png" />
+                     </image>
+                     <effect>
+                        <DropShadow height="105.11" offsetX="10.0" offsetY="10.0" radius="50.3" spread="0.09" width="98.09" />
+                     </effect>
+                  </ImageView>
+                  <GridPane layoutX="20.0" layoutY="199.0" prefHeight="90.0" prefWidth="285.0">
                      <children>
+                        <Rectangle arcHeight="40.0" arcWidth="40.0" height="133.0" stroke="BLACK" strokeType="INSIDE" width="299.0" GridPane.rowIndex="1">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="#e8e0eb" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
                         <Label id="nomLabel" fx:id="nomLabel" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="Label" GridPane.columnIndex="1">
                            <font>
                               <Font name="Felix Titling" size="12.0" />
@@ -93,18 +110,23 @@
                            </font></Label>
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="144.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="141.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <JFXButton fx:id="details" buttonType="RAISED" layoutX="110.0" layoutY="355.0" onAction="#afficherDetails" style="-fx-background-color: #339CFF;" text="afficher details" textAlignment="CENTER" underline="true" />
-                  <JFXButton fx:id="btnSupprimer" buttonType="RAISED" layoutX="14.0" layoutY="533.0" onAction="#delete_act" ripplerFill="#ff0c0c" text="Supprimer l'etablissement" />
-                  <JFXButton fx:id="modifierEtablissement" buttonType="RAISED" layoutX="176.0" layoutY="533.0" onAction="#affichermod" ripplerFill="#21ab34" text="Modifier l'etablissement" />
+                  <ImageView fx:id="imageetab" fitHeight="154.0" fitWidth="267.0" layoutX="43.0" pickOnBounds="true" />
+                  <JFXButton fx:id="details" buttonType="RAISED" layoutX="121.0" layoutY="301.0" onAction="#afficherDetails" style="-fx-background-color: #339CFF;" text="afficher details" textAlignment="CENTER" underline="true" />
+                  <Separator layoutX="68.0" layoutY="340.0" prefWidth="200.0" />
+                  <Label fx:id="premier" layoutX="152.0" layoutY="426.0" text="Label" />
+                  <Label fx:id="deuxieme" layoutX="46.0" layoutY="456.0" text="Label">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="troisieme" layoutX="228.0" layoutY="466.0" text="Label" />
                </children>
             </AnchorPane>
         </items>

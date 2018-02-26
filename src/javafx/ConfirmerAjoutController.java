@@ -110,7 +110,7 @@ public class ConfirmerAjoutController implements Initializable {
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM `etablisment` WHERE enabled=0");
             while (rs.next()) {
 
-                data.add(new Etablisment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13)));
+                data.add(new Etablisment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11), rs.getInt(12), rs.getInt(13), rs.getString(14)));
 
             }
         } catch (SQLException ex) {
@@ -130,7 +130,6 @@ public class ConfirmerAjoutController implements Initializable {
         idUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
          enabled.setCellValueFactory(new PropertyValueFactory<>("enabled"));
-        table.setItems(null);
         table.setItems(data);
     }
 
@@ -146,7 +145,7 @@ public class ConfirmerAjoutController implements Initializable {
             typelabel.setText(etablisment.getType());
 
         } else {
-            System.out.println("" + etablisment.getNom());
+            //System.out.println("" + etablisment.getNom());
 
             nomLabel.setText(" ");
             telLabel.setText(" ");
@@ -197,6 +196,7 @@ public class ConfirmerAjoutController implements Initializable {
              Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
            
             System.out.println("update Done");
+            LoadData();
         } catch (SQLException f) {
             System.out.println(f.getMessage());
 

@@ -5,22 +5,32 @@
  */
 package javafx;
 
+import javafx.scene.image.Image;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+
 import entities.Etablisment;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
 import services.Alertt;
 import services.EtablismentService;
 
@@ -51,6 +61,14 @@ public class FXMLController implements Initializable {
     private JFXButton ajouter;
     @FXML
     private AnchorPane rootpane;
+    public File fileSelected = null;
+
+    private Etablisment s;
+    @FXML
+    private Label nomimage;
+    @FXML
+    private ImageView image;
+    public String path;
 
     /**
      * Initializes the controller class.
@@ -59,14 +77,18 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         type.getItems().addAll("Garderie", "Jardins enfants", "Ecole privé");
 
-// dateCreation.setOnAction(new EventHandler() {
-//     public void handle(Event t) {
-//         LocalDate date = dateCreation.getValue();
-//         System.out.println("Selected date: " + date);
-//     }
-// });
     }
-
+ public static boolean isValidTel(String tel){
+        String testString = "\\D";
+      
+     if (testString.contains(tel) ){
+         return false;
+         
+     } else {  
+         return true;
+     }
+    
+ }
     public static boolean isValidMail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
                 + "[a-zA-Z0-9_+&*-]+)*@"
@@ -103,95 +125,47 @@ public class FXMLController implements Initializable {
 
         e.setDescription(description.getText());
         e.setCapacite((int) capacite.getValue());
+        if (fileSelected != null) {
+            path = fileSelected.getAbsolutePath();
 
+            path.replace("\\", "\\\\");
+            System.out.println("path" + path);
+        }
+        e.setImage(path);
         e.setEmail(email.getText());
 
         e.setEnabled(0);
-
-        s.ajouterEtablissement(e);
-        Alertt.infoBox("Votre demande va etre traitée", "Ajout", "succes");
-
+        if (nom.getText().equals("") || fix.getText().equals("")
+ || adresse.getText().equals("") || type.getValue().toString().equals("")
+  || propretaire.getText().equals("") || description.getText().equals("")||capacite.getValue()==0||path.equals("")||email.getText().equals("")||date.equals("")|| isValidMail(email.getText())==false || isValidTel(fix.getText())) {
+            Alertt.infoBox("veuillez remplir tous les champs oubien vérifiez Votre adresse Email", "veuillez remplir tous les champs");
+           
+        } else {
+            s.ajouterEtablissement(e);
+            Alertt.infoBox("Votre demande va etre traitée", "Ajout", "succes");
+        }
     }
 
-  
+    @FXML
+    public void imagechoice(ActionEvent event) throws IOException {
 
-//    public JFXTextField getNom() {
-//        return nom;
-//    }
-//
-//    public void setNom(JFXTextField nom) {
-//        this.nom = nom;
-//    }
-//
-//    public JFXComboBox getType() {
-//        return type;
-//    }
-//
-//    public void setType(JFXComboBox type) {
-//        this.type = type;
-//    }
-//
-//    public JFXTextField getAdresse() {
-//        return adresse;
-//    }
-//
-//    public void setAdresse(JFXTextField adresse) {
-//        this.adresse = adresse;
-//    }
-//
-//    public JFXTextField getFix() {
-//        return fix;
-//    }
-//
-//    public void setFix(JFXTextField fix) {
-//        this.fix = fix;
-//    }
-//
-//    public JFXTextField getPropretaire() {
-//        return propretaire;
-//    }
-//
-//    public void setPropretaire(JFXTextField propretaire) {
-//        this.propretaire = propretaire;
-//    }
-//
-//    public JFXTextField getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(JFXTextField email) {
-//        this.email = email;
-//    }
-//
-//    public JFXSlider getCapacite() {
-//        return capacite;
-//    }
-//
-//    public void setCapacite(JFXSlider capacite) {
-//        this.capacite = capacite;
-//    }
-//
-//    public DatePicker getDateCreation() {
-//        return dateCreation;
-//    }
-//
-//    public void setDateCreation(DatePicker dateCreation) {
-//        this.dateCreation = dateCreation;
-//    }
-//
-//    public JFXTextArea getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(JFXTextArea description) {
-//        this.description = description;
-//    }
-//
-//    public JFXButton getAjouter() {
-//        return ajouter;
-//    }
-//
-//    public void setAjouter(JFXButton ajouter) {
-//        this.ajouter = ajouter;
-//    }
+        FileChooser fc = new FileChooser();
+        fileSelected = fc.showOpenDialog(null);
+
+        System.out.println("" + fileSelected.getCanonicalPath());
+
+        nomimage.setText(fileSelected.getName());
+        File file = new File(fileSelected.getAbsolutePath());
+
+        Image image = new Image(file.toURI().toString());
+
+        // imageview.setImage(image);
+    }
+
+    @FXML
+    private void annuler(ActionEvent event) throws SQLException, IOException {
+        AnchorPane Anchpane = FXMLLoader.load(getClass().getResource("mesEtab.fxml"));
+        rootpane.getChildren().setAll(Anchpane);
+
+    }
 }

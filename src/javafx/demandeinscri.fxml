@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.DemandeinscriController">
+   <children>
+      <Label fx:id="nomEtablissement" layoutX="170.0" layoutY="439.0" text="Label" />
+      <JFXSlider fx:id="nombreEnfant" blockIncrement="1.0" layoutX="169.0" layoutY="517.0" max="10.0" min="1.0" />
+      <JFXButton fx:id="Participer" layoutX="157.0" layoutY="628.0" onAction="#participerbtn" text="Participer" />
+      <Label layoutX="32.0" layoutY="204.0" text="Votre nom:" />
+      <Label layoutX="32.0" layoutY="294.0" text="Votre Email:" />
+      <Label layoutX="32.0" layoutY="375.0" text="Votre numéro" />
+      <Label layoutX="32.0" layoutY="439.0" text="Etablissement désiré:" />
+      <Label layoutX="32.0" layoutY="516.0" text="Nombre des Enfants:" />
+      <Label layoutX="140.0" layoutY="71.0" text="Demande d'inscription" />
+      <Label fx:id="nomUtilisateur" layoutX="170.0" layoutY="204.0" text="nomUtilisateur" />
+      <Label fx:id="mailUtilisateur" layoutX="170.0" layoutY="294.0" text="mailUtilisateur" />
+      <Label layoutX="170.0" layoutY="375.0" text="mailUtilisateur" />
+   </children>
+</AnchorPane>

@@ -5,7 +5,6 @@
  */
 package javafx;
 
-import static javafx.EmailSendingController.mailUtilisateur;
 import static javafx.ProfilEtabController.EmailEtab;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +24,9 @@ public class JavaFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ListEtab.fxml"));
-       //  Parent root = FXMLLoader.load(getClass().getResource("ConfirmerAjout.fxml"));
+      //Parent root = FXMLLoader.load(getClass().getResource("ConfirmerAjout.fxml"));
+      Parent root = FXMLLoader.load(getClass().getResource("PremierPage.fxml"));
+     // Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -46,6 +46,7 @@ public class JavaFX extends Application {
         System.out.println("ey");
       /* SendMail test = new SendMail();
         SendMail.send(EmailEtab,mailUtilisateur);*/
+
         launch(args);
     }
 
